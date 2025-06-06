@@ -5,7 +5,7 @@
 
 std::atomic_int numCreated_ = 0;
 
-Thread::Thread(ThreadFunc func, const std::string& name = std::string())
+Thread::Thread(ThreadFunc func, const std::string& name )
     : started_(false),
     joined_(false),
     tid_(0),
@@ -32,13 +32,20 @@ void Thread::start()
     sem_t sem; // 信号量, 用于线程间同步
     sem_init(&sem, false, 0); // 初始化信号量
     
-    threadPtr_ = std::make_shared<std::thread>(new std::thread([&]()
+    //  threadPtr_ = std::shared_ptr<std::thread>(new std::thread([&]()->void
+    //     {
+    //         tid_ = CurrentThread::tid(); // 获取当前线程的ID
+    //         sem_post(&sem); // 线程函数开始执行, 发送信号量
+    //         func_(); // 开启一个新线程, 专门执行该线程函数
+    //     }
+    // ));
+
+    threadPtr_ = std::make_shared<std::thread>([&]()->void
         {
             tid_ = CurrentThread::tid(); // 获取当前线程的ID
             sem_post(&sem); // 线程函数开始执行, 发送信号量
             func_(); // 开启一个新线程, 专门执行该线程函数
-        }
-    ));
+        });
     
     // 必须等待获取 新线程的 tid值---- 线程间, 使用信号量
     sem_wait(&sem);  // 0阻塞
