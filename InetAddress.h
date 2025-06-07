@@ -17,6 +17,8 @@ public:
     uint16_t toPort() const;
 
     const sockaddr_in* getSockAddr() const { return &addr_; }
+
+    void setSockAddr(const sockaddr_in& addr) { addr_ = addr; } // 设置 客户端地址
 private:
     sockaddr_in addr_;
 };

@@ -57,7 +57,7 @@ public:
     void disableReading() {events_ &= ~kReadEvent; update();}
     void enableWriteing() {events_ |= kWriteEvent; update();}
     void disableWriteing() {events_ &= ~kWriteEvent; update();}
-    void disbleALL() {events_ = kReadEvent; update();}
+    void disbleALL() {events_ = kNoneEvent; update();}
 
     bool isNoneEvent() const {return events_ == kNoneEvent;}
     bool isWriting() const {return events_ & kWriteEvent;}
