@@ -28,7 +28,7 @@ public:
 
 private:
     EventLoop *loop_;
-    Scoket acceptSocket_; 
+    Socket acceptSocket_; 
     Channel acceptChannel_;
     NewConnectionCallback newConnectionCallback_;
     bool listenning_;

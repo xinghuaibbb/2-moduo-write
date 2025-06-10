@@ -8,12 +8,12 @@
 #include <string.h>
 #include <netinet/tcp.h>
 
-Scoket::~Scoket()
+Socket::~Socket()
 {
     close(sockfd_);
 }
 
-void Scoket::bindAddress(const InetAddress& localaddr)
+void Socket::bindAddress(const InetAddress& localaddr)
 {
     if (0 != ::bind(sockfd_, (sockaddr*)localaddr.getSockAddr(), sizeof(sockaddr_in)))
     {
@@ -21,15 +21,15 @@ void Scoket::bindAddress(const InetAddress& localaddr)
     }
 }
 
-void Scoket::listen()
+void Socket::listen()
 {
-    if (0 != ::listen(sockfd_, 1024))
+    if (0 != ::listen(sockfd_, 1024)) // 设置监听个数
     {
         LOG_FATAL(" listen socket: %d fail \n", sockfd_);
     }
 }
 
-int Scoket::accept(InetAddress* peeraddr)
+int Socket::accept(InetAddress* peeraddr)
 {
     sockaddr_in addr;
     socklen_t len;
@@ -42,7 +42,7 @@ int Scoket::accept(InetAddress* peeraddr)
     return connfd;
 }
 
-void Scoket::shutdownWrite()
+void Socket::shutdownWrite()
 {
     if (0 != ::shutdown(sockfd_, SHUT_WR))
     {
@@ -50,25 +50,25 @@ void Scoket::shutdownWrite()
     }
 }
 
-void Scoket::setTcpNoDelay(bool on)
+void Socket::setTcpNoDelay(bool on)
 {
     int optval = on ? 1 : 0;
     ::setsockopt(sockfd_, IPPROTO_TCP, TCP_NODELAY, &optval, sizeof(optval));
 }
 
-void Scoket::setReuseAddr(bool on) // 设置地址重用
+void Socket::setReuseAddr(bool on) // 设置地址重用
 {
     int optval = on ? 1 : 0;
     ::setsockopt(sockfd_, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(optval));
 }
 
-void Scoket::sertReusePort(bool on) // 设置端口重用
+void Socket::sertReusePort(bool on) // 设置端口重用
 {
     int optval = on ? 1 : 0;
     ::setsockopt(sockfd_, SOL_SOCKET, SO_REUSEPORT, &optval, sizeof(optval));
 }
 
-void Scoket::setKeepAlive(bool on) // 设置长连接
+void Socket::setKeepAlive(bool on) // 设置长连接
 {
     int optval = on ? 1 : 0;
     ::setsockopt(sockfd_, SOL_SOCKET, SO_KEEPALIVE, &optval, sizeof(optval));

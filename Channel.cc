@@ -1,5 +1,6 @@
 #include "Channel.h"
 #include "Logger.h"
+#include "Eventloop.h"
 
 #include <sys/epoll.h>
 #include <sys/poll.h>
@@ -25,7 +26,7 @@ Channel::~Channel()
 
 }
 
-// 什么时候调用?
+// 什么时候调用?-- 绑定Tcpconnection的生命周期
 void Channel::tie(const std::shared_ptr<void>& obj)
 {
     
@@ -39,14 +40,14 @@ void Channel::update()
 {
     // 通过channel的所属事件循环(eventloop)来更新poller中的事件,调用poller的方法, 注册fd的events事件
     // add ...
-    // loop_->updateChannel(this);
+    loop_->updateChannel(this);
 }
 
 // 在channel所属的eventloop中删除 该channel
 void Channel::remove()
 {
     // add ...
-    // loop_->removeChannel(this);
+    loop_->removeChannel(this);
 }
 
 void Channel::handleEvent(Timestamp receiveTime)

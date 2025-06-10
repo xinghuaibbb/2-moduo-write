@@ -11,6 +11,7 @@ static int createNonblockingSocket()
     {
         LOG_FATAL("%s:%s:%d listen fd create error: %d \n", __FILE__, __FUNCTION__, __LINE__, errno);
     }
+    return sockfd; // 返回创建的非阻塞套接字描述符
 }
 
 Acceptor::Acceptor(EventLoop *loop, const InetAddress &listenAddr, bool reuseport)
@@ -38,7 +39,7 @@ Acceptor::~Acceptor()
 void Acceptor::listen()
 {
     listenning_ = true;
-    acceptSocket_.listen(); // listenfd 
+    acceptSocket_.listen(); // 设置监听个数
     acceptChannel_.enableReading(); // 启用读事件监听
 }
 

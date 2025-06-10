@@ -3,12 +3,12 @@
 #include "noncopyable.h"
 #include "InetAddress.h"
 
-class Scoket : noncopyable
+class Socket : noncopyable
 {
 public:
-    explicit Scoket(int sockfd) : sockfd_(sockfd) {}
+    explicit Socket(int sockfd) : sockfd_(sockfd) {}
 
-    ~Scoket();
+    ~Socket();
 
     int fd() const { return sockfd_;}
     void bindAddress(const InetAddress& localaddr);
