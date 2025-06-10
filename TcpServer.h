@@ -48,7 +48,7 @@ public:
 
 private:
     void newConnection(int sockfd, const InetAddress& peerAddress); // 新连接到来时的回调, 由acceptor调用
-    void removeConnection(int sockfd, const InetAddress& peerAddress);
+    void removeConnection(const TcpConnectionPtr& conn);
     void removeConnectionInLoop(const TcpConnectionPtr& conn);
 
     using ConnectionMap = std::unordered_map<std::string, TcpConnectionPtr>;

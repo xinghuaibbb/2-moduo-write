@@ -26,7 +26,7 @@ class Socket;
 
 class TcpConnection : noncopyable, public std::enable_shared_from_this<TcpConnection>
 {
-private:
+public:
      TcpConnection(EventLoop *loop,
         const std::string &name,
         int sockfd,
@@ -67,7 +67,7 @@ private:
 
 
 
-public:
+private:
     enum StateE
     {
         kConnecting, // 正在连接
