@@ -20,8 +20,6 @@ public:
         , writerIndex_(kCheapPrepend)
     {}
 
-    ~Buffer();
-
     size_t readableBytes() const
     {
         return writerIndex_ - readerIndex_;

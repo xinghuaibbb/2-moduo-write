@@ -11,6 +11,8 @@
 #include "InetAddress.h"
 #include "noncopyable.h"
 #include "CallBack.h"
+#include "TcpConnection.h"
+#include "Buffer.h"
 
 #include <functional>
 #include <string>

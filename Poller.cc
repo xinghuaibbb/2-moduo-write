@@ -6,6 +6,8 @@ Poller::Poller(EventLoop* Loop)
     : ownerLoop_(Loop)
 {}
 
+Poller::~Poller() = default;
+
 
 // 判断当前channel是否在当前Poller中
 bool Poller::hasChannel(Channel* channel) const

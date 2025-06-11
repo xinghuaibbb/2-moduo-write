@@ -31,15 +31,25 @@ void Socket::listen()
 
 int Socket::accept(InetAddress* peeraddr)
 {
+    /**
+     * 问题:
+     * 1. accept 传参错误 
+     * 2. connd没有设置 非阻塞 
+     */
     sockaddr_in addr;
-    socklen_t len;
+    // socklen_t len; 
+    socklen_t len = sizeof(addr); 
     bzero(&addr, sizeof(addr));
-    int connfd = ::accept(sockfd_, (sockaddr*)&addr, &len);
+    // int connfd = ::accept(sockfd_, (sockaddr*)&addr, &len);
+    //设置非阻塞
+    int connfd = ::accept4(sockfd_, (sockaddr*)&addr, &len, SOCK_CLOEXEC | SOCK_NONBLOCK);
+
     if (connfd >= 0)
     {
         peeraddr->setSockAddr(addr); // 设置客户端地址
     }
-    return connfd;
+    return connfd;  
+
 }
 
 void Socket::shutdownWrite()
